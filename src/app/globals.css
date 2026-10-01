@@ -1,0 +1,261 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens, carried over from the Figma Make build.
+ * Palette: warm ivory + peacock green + restrained aqua.
+ *
+ * Contrast rules (WCAG AA, verified in docs/AUDIT.md):
+ *  - `muted`       body/label text on ivory and ivory-dark (adjusted from #6b8c7c, which was 3.2:1)
+ *  - `peacock-mid` accent text on light surfaces
+ *  - `aqua-light`  accent text on peacock / forest surfaces
+ *  - `aqua`        decoration only (dots, rules, rings), never small text
+ */
+@theme {
+  --color-ivory: #f3ede0;
+  --color-ivory-dark: #e6dfd0;
+  --color-ivory-muted: #ddd6c8;
+  --color-peacock: #1a4538;
+  --color-peacock-mid: #245e4e;
+  --color-peacock-dark: #0e2a22;
+  --color-forest: #091910;
+  --color-teal: #2c7865;
+  --color-aqua: #4aa89a;
+  --color-aqua-light: #7cc7ba;
+  --color-muted: #476656;
+  --color-ink: #0c2118;
+  --color-sage: #c8d8d0;
+
+  /* Real peacock-feather shades. Decoration only (feather, eye marks, hairlines), never text. */
+  --color-feather-deep: #0b3a2a;
+  --color-feather-green: #1f8a55;
+  --color-feather-emerald: #2fae6d;
+  --color-feather-lime: #a3cf55;
+  --color-feather-copper: #c47a2c;
+  --color-feather-brown: #4a2214;
+  --color-feather-cyan: #3cc4e8;
+  --color-feather-blue: #1c2aa0;
+  --color-feather-navy: #070a3c;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* next/font exposes CSS variables on <html>; `inline` keeps the var() reference live. */
+@theme inline {
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), 'Courier New', monospace;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  .font-serif {
+    font-variation-settings: 'SOFT' 100;
+  }
+
+  ::selection {
+    background: var(--color-peacock);
+    color: var(--color-ivory);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  [data-surface='dark'] :focus-visible,
+  [data-surface='dark']:focus-visible {
+    outline-color: var(--color-aqua-light);
+  }
+}
+
+/* ─── Scroll reveal ──────────────────────────────────────────────
+ * Only armed when JS is running (the <html class="js"> flag is set in layout.tsx),
+ * so content is never hidden for no-JS visitors or crawlers.
+ */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.8s var(--ease-out-soft),
+    transform 0.8s var(--ease-out-soft);
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── Feather-eye (hero signature) ───────────────────────────────
+ * Barbs draw in once on load; the eye takes one slow breath. (An infinite loop froze software-rendered Chrome.) Both are decorative and
+ * collapse to their finished state under prefers-reduced-motion (rule below).
+ */
+.feather-barb {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: feather-draw 0.9s var(--ease-out-soft) var(--d, 0ms) both;
+}
+/* Hold the draw-in until the intro loader has finished. */
+.loader-on .feather-barb {
+  animation-delay: calc(var(--d, 0ms) + 1.25s);
+}
+.feather-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: feather-breathe 2.4s ease-in-out 1s 1;
+}
+@keyframes feather-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes feather-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+/* ─── Intro loader ───────────────────────────────────────────────
+ * Armed by the pre-paint script in layout.tsx (once per session, not under reduced motion).
+ * Fully CSS-timed, so it leaves by itself even if JS never runs. Click or any key skips it.
+ */
+.loader {
+  display: none;
+}
+.loader-on .loader {
+  display: flex;
+  animation: loader-out 0.45s ease 1.25s forwards;
+}
+.loader-skip .loader {
+  display: none;
+}
+.loader-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: loader-open 0.8s var(--ease-out-soft) 0.1s both;
+}
+.loader-word {
+  animation: loader-word 0.5s ease 0.55s both;
+}
+@keyframes loader-open {
+  from {
+    transform: scale(0.15, 0.02);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes loader-word {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes loader-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+/* ─── Small feather-eye touches ──────────────────────────────── */
+/* A tiny eye after button labels: it opens a little on hover. */
+.btn-eye::after {
+  content: '';
+  width: 6px;
+  height: 9px;
+  margin-left: 4px;
+  flex: none;
+  border: 1.25px solid currentColor;
+  border-radius: 50%;
+  background: radial-gradient(circle, currentColor 0 1.2px, transparent 1.6px);
+  opacity: 0.55;
+  transition:
+    transform 0.35s var(--ease-out-soft),
+    opacity 0.35s var(--ease-out-soft);
+}
+.btn-noeye::after {
+  display: none;
+}
+.btn-eye:hover::after,
+.btn-eye:focus-visible::after {
+  opacity: 1;
+  transform: scale(1.25, 1.15);
+}
+
+/* Hairline that shifts green → teal → cyan, like light on a feather. */
+.feather-rule {
+  background: linear-gradient(90deg, transparent, var(--color-feather-emerald), var(--color-feather-cyan), var(--color-feather-emerald), transparent);
+  opacity: 0.55;
+}
+
+/* ─── Nav link underline ─────────────────────────────────────── */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-feather-emerald), var(--color-feather-cyan));
+  transition: width 0.35s var(--ease-out-soft);
+}
+.nav-link:hover::after,
+.nav-link[aria-current='true']::after {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,18 @@
+node_modules/
+.next/
+out/
+.env*
+next-env.d.ts
+*.tsbuildinfo
+*.log
+.tmp-*
+
+# Project docs, briefs and AI-assistant files: kept local, not pushed
+AGENTS.md
+CLAUDE.md
+PDA.txt
+tickets.md
+docs/
+scripts/build-tracker.mjs
+.claude/
+graphify-out/
