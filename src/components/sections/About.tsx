@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { aboutSection } from '@/content/about'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Reveal } from '@/components/ui/Reveal'
@@ -21,10 +22,37 @@ export function About() {
               ))}
             </div>
           </Reveal>
+          <Reveal delay={120}>
+            <div className="mt-12 max-w-[520px]">
+              <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">{aboutSection.drivesTitle}</h3>
+              <ul className="mt-4">
+                {aboutSection.drives.map(({ title, body }) => (
+                  <li key={title} className="grid grid-cols-[110px_1fr] items-baseline gap-5 border-b border-ink/10 py-4">
+                    <span className="font-serif text-[22px] italic leading-none text-peacock">{title}</span>
+                    <span className="text-[15px] font-light text-ink">{body}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
         </div>
 
         <Reveal delay={120}>
           <div className="space-y-12 lg:pt-6">
+            <figure>
+              <Image
+                src={aboutSection.photo.src}
+                alt={aboutSection.photo.alt}
+                width={aboutSection.photo.width}
+                height={aboutSection.photo.height}
+                sizes="(min-width: 1024px) 520px, 100vw"
+                className="h-auto w-full rounded-2xl border border-ink/10 shadow-[0_30px_80px_rgb(12_33_24/0.12)]"
+              />
+              <figcaption className="mt-3 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+                {aboutSection.photo.caption}
+              </figcaption>
+            </figure>
+
             <div>
               <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
                 {aboutSection.projectTypesTitle}
@@ -34,19 +62,6 @@ export function About() {
                   <li key={`${type}-${i}`} className="flex items-baseline gap-5 border-b border-ink/10 py-4">
                     <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 self-start rounded-full bg-aqua" />
                     <span className="text-[15px] font-medium text-ink">{type}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">The team</h3>
-              <ul className="mt-4 grid gap-4 sm:grid-cols-2">
-                {aboutSection.team.map((person, i) => (
-                  <li key={`${person.name}-${i}`} className="rounded-xl border border-peacock/15 bg-peacock/5 p-5">
-                    <span aria-hidden className="mb-4 block size-12 rounded-full border border-dashed border-peacock/40" />
-                    <p className="text-[15px] font-medium text-ink">{person.name}</p>
-                    <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.1em] text-muted">{person.role}</p>
                   </li>
                 ))}
               </ul>

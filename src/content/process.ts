@@ -5,7 +5,6 @@ export const processSection = {
   heading: { lines: ['First the problem.'], emphasis: 'Then the screen.' } satisfies Heading,
 }
 
-// DRAFT: keeps the four-stage framework from PDA §12. Confirm against the real workflow.
 export const processSteps: ProcessStep[] = [
   {
     n: '01',

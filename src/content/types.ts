@@ -20,7 +20,10 @@ export type SiteConfig = {
   /** Legal entity shown in the copyright line. */
   legalName: string
   descriptor: string
-  email: string
+  /** Leave undefined to hide every email spot. */
+  email?: string
+  /** WhatsApp number in international format, digits only (e.g. 91XXXXXXXXXX). Primary CTA target when set. */
+  whatsapp?: string
   /** Leave undefined to hide. Do not guess. */
   location?: string
   /** Leave undefined to hide the availability pill. */
@@ -47,7 +50,7 @@ export type ProcessStep = {
 
 export type Differentiator = { title: string; body: string }
 
-export type ProjectVisualKind = 'console' | 'mobile' | 'analytics'
+export type ProjectVisualKind = 'console' | 'mobile' | 'analytics' | 'lending'
 
 export type ProjectImage = {
   src: string
@@ -73,6 +76,8 @@ export type Project = {
   technologies: string[]
   /** Real screenshot. When absent, a neutral wireframe placeholder is drawn from `visual`. */
   image?: ProjectImage
+  /** Several screenshots shown side by side (e.g. phone screens). Takes precedence over `image`. */
+  gallery?: ProjectImage[]
   visual: ProjectVisualKind
   /** Case-study URL. When absent, the CTA renders as a non-link "pending" label. */
   href?: string

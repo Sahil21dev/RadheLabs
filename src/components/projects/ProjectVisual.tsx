@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import type { Project } from '@/content/types'
 import { cn } from '@/lib/cn'
+import { LendingVisual } from './LendingVisual'
 
 /**
  * Neutral wireframes in the style of the original Figma mockups, with no text or figures.
- * They are placeholders: a real screenshot in `project.image` replaces them.
+ * Used where no screenshot can be shown: a real screenshot in `project.image` replaces them.
  */
 
 const bar = (w: string, tone: 'dark' | 'light', strong = false) => (
@@ -192,6 +193,7 @@ const surfaces = {
   console: { bg: 'bg-[#0b1f18]', pad: 'p-5 sm:p-8 lg:p-10', Wireframe: ConsoleWireframe },
   mobile: { bg: 'bg-peacock/[0.07]', pad: 'p-5 sm:p-7', Wireframe: MobileWireframe },
   analytics: { bg: 'bg-[#f0ece4]', pad: 'p-5 sm:p-6', Wireframe: AnalyticsWireframe },
+  lending: { bg: 'bg-[#0b1f18]', pad: 'p-5 sm:p-8 lg:p-10', Wireframe: LendingVisual },
 } as const
 
 export function ProjectVisual({
@@ -203,13 +205,29 @@ export function ProjectVisual({
   priority?: boolean
   className?: string
 }) {
-  const { image, visual } = project
+  const { image, gallery, visual } = project
   const surface = surfaces[visual]
+  const hasShots = Boolean(image || gallery?.length)
 
   return (
-    <div className={cn('relative overflow-hidden', surface.bg, surface.pad, className)}>
+    <div className={cn('relative flex flex-col justify-center overflow-hidden', surface.bg, surface.pad, className)}>
       <div className="transition-transform duration-700 ease-out-soft group-hover:scale-[1.025]">
-        {image ? (
+        {gallery?.length ? (
+          <div className="flex justify-center gap-3 sm:gap-4">
+            {gallery.map((shot, i) => (
+              <Image
+                key={shot.src}
+                src={shot.src}
+                alt={shot.alt}
+                width={shot.width}
+                height={shot.height}
+                priority={priority && i === 0}
+                sizes="(min-width: 1024px) 20vw, 33vw"
+                className="h-auto w-[calc((100%-2rem)/3)] max-w-[220px] rounded-[14px] border border-ink/10 shadow-[0_20px_50px_rgb(12_33_24/0.14)]"
+              />
+            ))}
+          </div>
+        ) : image ? (
           <Image
             src={image.src}
             alt={image.alt}
@@ -225,15 +243,15 @@ export function ProjectVisual({
           </div>
         )}
       </div>
-      {!image && (
+      {!hasShots && (
         <span
           aria-hidden
           className={cn(
             'absolute bottom-2 right-3 font-mono text-[11px] uppercase tracking-[0.14em]',
-            visual === 'console' ? 'text-ivory/50' : 'text-ink/55',
+            visual === 'console' || visual === 'lending' ? 'text-ivory/50' : 'text-ink/55',
           )}
         >
-          Placeholder visual
+          Illustrative visual
         </span>
       )}
     </div>

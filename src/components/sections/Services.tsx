@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { services, servicesSection } from '@/content/services'
-import { contactHref } from '@/content/site'
+import { ctaHref } from '@/content/site'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
@@ -117,7 +117,7 @@ export function Services() {
                   ))}
                 </ul>
                 <div className="mt-9 border-t border-ivory/15 pt-7">
-                  <Button href={contactHref()} variant="linkOnDark" arrow>
+                  <Button href={ctaHref()} variant="linkOnDark" arrow>
                     Discuss your project
                   </Button>
                 </div>

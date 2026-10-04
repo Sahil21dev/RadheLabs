@@ -1,17 +1,12 @@
 import { Button } from '@/components/ui/Button'
 
-/** A real link when the case study exists; otherwise a clearly non-interactive pending label. */
-export function CaseStudyCTA({ href, label = 'View case study' }: { href?: string; label?: string }) {
-  if (!href) {
-    return (
-      <span className="font-mono text-[11px] uppercase tracking-[0.13em] text-muted">
-        Case study [link pending]
-      </span>
-    )
-  }
+/** Links to the case study, or the live site for external URLs. Renders nothing without a link. */
+export function CaseStudyCTA({ href, label }: { href?: string; label?: string }) {
+  if (!href) return null
+  const external = /^https?:\/\//.test(href)
   return (
     <Button href={href} variant="link" arrow>
-      {label}
+      {label ?? (external ? 'Visit live site' : 'View case study')}
     </Button>
   )
 }

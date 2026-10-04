@@ -5,7 +5,6 @@ import { Services } from '@/components/sections/Services'
 import { SelectedWork } from '@/components/sections/SelectedWork'
 import { WhyUs } from '@/components/sections/WhyUs'
 import { Process } from '@/components/sections/Process'
-import { Proof } from '@/components/sections/Proof'
 import { About } from '@/components/sections/About'
 import { FinalCTA } from '@/components/sections/FinalCTA'
 
@@ -26,7 +25,6 @@ export default function Home() {
         <SelectedWork />
         <WhyUs />
         <Process />
-        <Proof />
         <About />
         <FinalCTA />
       </main>
