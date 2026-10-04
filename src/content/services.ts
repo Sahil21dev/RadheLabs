@@ -5,7 +5,6 @@ export const servicesSection = {
   heading: { lines: ['From first sketch'], emphasis: 'to live product.' } satisfies Heading,
 }
 
-// DRAFT: summaries are the outcome-oriented copy from PDA §8. Confirm against real capabilities.
 export const services: Service[] = [
   {
     id: 'product-design',
@@ -27,10 +26,11 @@ export const services: Service[] = [
     includes: ['Cross-platform apps', 'Mobile UX', 'Production-grade engineering'],
   },
   {
-    id: 'backend-systems',
-    title: 'Backend & Systems',
-    summary: 'The parts nobody sees but everybody feels: APIs, databases, integrations and hosting.',
-    includes: ['APIs', 'Databases', 'Integrations', 'Infrastructure'],
+    id: 'fintech-lending',
+    title: 'Fintech & Lending Systems',
+    summary:
+      'The systems a lender runs on, from the first KYC check to the last EMI: correct, auditable and built to scale.',
+    includes: ['KYC & onboarding', 'Loan origination (LOS)', 'Loan management (LMS)', 'Rules engines (BRE)', 'Lending CRM'],
   },
   {
     id: 'ai-products',

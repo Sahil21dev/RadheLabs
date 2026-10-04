@@ -1,5 +1,5 @@
 import { contactSection } from '@/content/contact'
-import { contactHref, isPlaceholder, site } from '@/content/site'
+import { contactHref, ctaHref, isPlaceholder, site } from '@/content/site'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
@@ -7,7 +7,7 @@ import { DotGrid } from '@/components/decor/DotGrid'
 import { FeatherEye } from '@/components/decor/FeatherEye'
 
 export function FinalCTA() {
-  const emailReady = !isPlaceholder(site.email)
+  const emailReady = Boolean(site.email && !isPlaceholder(site.email))
   return (
     <section
       id="contact"
@@ -48,18 +48,16 @@ export function FinalCTA() {
             {contactSection.body}
           </p>
           <div className="flex flex-col items-start gap-x-6 gap-y-5 sm:flex-row sm:items-center">
-            <Button href={contactHref()} variant="inverse" arrow>
+            <Button href={ctaHref()} variant="inverse" arrow>
               {contactSection.primaryCta}
             </Button>
-            {emailReady ? (
+            {emailReady && (
               <a
                 href={contactHref()}
                 className="break-all border-b border-aqua-light/40 pb-1 font-serif text-[18px] italic text-aqua-light transition-colors hover:border-aqua-light"
               >
                 {site.email}
               </a>
-            ) : (
-              <span className="font-mono text-[12px] tracking-[0.06em] text-ivory/70">{site.email}</span>
             )}
           </div>
 

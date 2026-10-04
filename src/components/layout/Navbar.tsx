@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { site, contactHref } from '@/content/site'
+import { site, ctaHref } from '@/content/site'
 import { BrandMark } from '@/components/ui/BrandMark'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
@@ -61,7 +61,7 @@ export function Navbar() {
         </nav>
 
         <div className="ml-auto hidden md:block">
-          <Button href={contactHref()} variant="compact" arrow>
+          <Button href={ctaHref()} variant="compact" arrow>
             Tell us your idea
           </Button>
         </div>
@@ -103,7 +103,7 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
-          <Button href={contactHref()} arrow className="mt-6" onClick={() => setOpen(false)}>
+          <Button href={ctaHref()} arrow className="mt-6" onClick={() => setOpen(false)}>
             Tell us your idea
           </Button>
         </nav>

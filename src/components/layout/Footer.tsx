@@ -1,4 +1,4 @@
-import { site, contactHref, isPlaceholder } from '@/content/site'
+import { site, contactHref, ctaHref, externalProps, isPlaceholder, whatsappDisplay } from '@/content/site'
 import { BrandMark } from '@/components/ui/BrandMark'
 import { EyeDivider } from '@/components/decor/EyeDivider'
 
@@ -8,7 +8,8 @@ const footLink =
 
 export function Footer() {
   const socials = site.social.filter((s) => s.href)
-  const emailReady = !isPlaceholder(site.email)
+  const emailReady = Boolean(site.email && !isPlaceholder(site.email))
+  const whatsapp = whatsappDisplay()
   const year = new Date().getFullYear()
 
   return (
@@ -36,8 +37,8 @@ export function Footer() {
 
         <nav aria-label="Footer">
           <h2 className={columnTitle}>Navigation</h2>
-          {[...site.nav, { label: 'Tell us your idea', href: '#contact' }].map((link) => (
-            <a key={link.href} href={link.href} className={footLink}>
+          {[...site.nav, { label: 'Tell us your idea', href: ctaHref() }].map((link) => (
+            <a key={link.href} href={link.href} className={footLink} {...externalProps(link.href)}>
               {link.label}
             </a>
           ))}
@@ -45,12 +46,15 @@ export function Footer() {
 
         <div>
           <h2 className={columnTitle}>Contact</h2>
-          {emailReady ? (
+          {emailReady && (
             <a href={contactHref()} className="block break-words text-[14px] font-light text-aqua-light">
               {site.email}
             </a>
-          ) : (
-            <p className="font-mono text-[12px] tracking-[0.06em] text-ivory/80">{site.email}</p>
+          )}
+          {whatsapp && (
+            <a href={ctaHref()} {...externalProps(ctaHref())} className="mt-1 block text-[14px] font-light text-aqua-light">
+              WhatsApp · {whatsapp}
+            </a>
           )}
         </div>
 

@@ -1,5 +1,6 @@
 import type { AnchorHTMLAttributes, ReactNode } from 'react'
 import { cn } from '@/lib/cn'
+import { externalProps } from '@/content/site'
 
 const base = 'gap-2 font-mono uppercase transition-[background-color,color,gap,border-color] duration-300'
 
@@ -31,7 +32,7 @@ type ButtonProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & {
 
 export function Button({ href, variant = 'primary', arrow, className, children, ...rest }: ButtonProps) {
   return (
-    <a href={href} className={cn(base, variants[variant], arrow && 'btn-noeye', className)} {...rest}>
+    <a href={href} className={cn(base, variants[variant], arrow && 'btn-noeye', className)} {...externalProps(href)} {...rest}>
       {children}
       {arrow && <span aria-hidden>→</span>}
     </a>

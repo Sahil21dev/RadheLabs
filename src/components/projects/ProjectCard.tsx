@@ -33,9 +33,11 @@ export function ProjectCard({ project, index, layout, priority }: ProjectCardPro
             <ProjectOutcome outcome={project.outcome} />
             <TechnologyTags items={project.technologies} />
           </div>
-          <div className="border-t border-ink/10 pt-7">
-            <CaseStudyCTA href={project.href} />
-          </div>
+          {project.href && (
+            <div className="border-t border-ink/10 pt-7">
+              <CaseStudyCTA href={project.href} />
+            </div>
+          )}
         </div>
       </article>
     )

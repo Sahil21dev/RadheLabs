@@ -27,10 +27,10 @@ const mono = DM_Mono({
 })
 
 const description =
-  'RadheLabs: developers and designers from India building websites, apps and the systems behind them with care.'
+  'RadheLabs solves real-world problems for founders and small businesses by designing and building websites, apps, and fintech and lending systems.'
 
 export const metadata: Metadata = {
-  title: `${site.name}: software made like it matters`,
+  title: `${site.name}: technology that helps you grow faster`,
   description,
   robots: site.indexable ? undefined : { index: false, follow: false },
 }
