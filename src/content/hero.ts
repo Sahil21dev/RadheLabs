@@ -6,7 +6,7 @@ export const hero = {
   eyebrow: 'Developers and designers, made in India',
   headline: { lines: ['Technology that helps'], emphasis: 'you grow faster.' } satisfies Heading,
   body: 'We’re RadheLabs. We solve real-world problems for founders and small businesses by designing and building software that works from day one.',
-  /** WHO IT'S FOR. Required by PDA §3 and not yet known. */
+  /** Who it's for, shown in the hero meta line. */
   audience: 'small businesses, founders, and agencies with overflow work',
   primaryCta: { label: 'See what we’ve built', href: '#work' },
   secondaryCta: { label: 'Tell us your idea', href: ctaHref() },

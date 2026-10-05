@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start -p ${PORT:-3000}",
     "typecheck": "tsc --noEmit",
-    "check:placeholders": "node scripts/find-placeholders.mjs"
-    
+    "check:placeholders": "node scripts/find-placeholders.mjs",
+    "tracker": "node scripts/build-tracker.mjs"
   },
   "dependencies": {
     "next": "^16.3.5",

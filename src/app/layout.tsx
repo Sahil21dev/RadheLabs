@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { DM_Mono, DM_Sans, Fraunces } from 'next/font/google'
-import { site } from '@/content/site'
+import { site, siteUrl } from '@/content/site'
 import { Loader } from '@/components/ui/Loader'
 import './globals.css'
 
@@ -29,9 +29,17 @@ const mono = DM_Mono({
 const description =
   'RadheLabs solves real-world problems for founders and small businesses by designing and building websites, apps, and fintech and lending systems.'
 
+const title = `${site.name}: technology that helps you grow faster`
+
 export const metadata: Metadata = {
-  title: `${site.name}: technology that helps you grow faster`,
+  metadataBase: new URL(siteUrl),
+  title,
   description,
+  applicationName: site.name,
+  alternates: { canonical: '/' },
+  // The share image comes from src/app/opengraph-image.tsx and twitter-image.tsx.
+  openGraph: { type: 'website', siteName: site.name, title, description, url: '/', locale: 'en_IN' },
+  twitter: { card: 'summary_large_image', title, description },
   robots: site.indexable ? undefined : { index: false, follow: false },
 }
 

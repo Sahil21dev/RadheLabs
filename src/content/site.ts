@@ -21,7 +21,7 @@ export const site: SiteConfig = {
     { label: 'About', href: '#about' },
   ],
 
-  // Rendered only when `href` is set.
+  // Hidden until the owner supplies real profile URLs. Add { platform, href } entries to show them.
   social: [],
 
   // Add real pages (e.g. { label: 'Privacy', href: '/privacy' }) only once they exist.
@@ -29,6 +29,12 @@ export const site: SiteConfig = {
 
   indexable: true,
 }
+
+/**
+ * Public origin of the live site, used for canonical URLs, share previews, robots and the sitemap.
+ * Set `NEXT_PUBLIC_SITE_URL` (e.g. https://yourdomain.com) in the host's environment; it falls back to the production domain.
+ */
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://radhelabs.in').replace(/\/+$/, '')
 
 export const isPlaceholder = (value: string) => /^\[.*\]$/.test(value.trim())
 
